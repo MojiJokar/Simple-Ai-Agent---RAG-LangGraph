@@ -1,4 +1,4 @@
-Moji RAG Agent
+# Moji RAG Agent
 A Persian-speaking RAG agent built with LangGraph that answers only from your own data, cites its sources, and honestly admits when it doesn't know — instead of hallucinating. Free, local, and beginner-friendly.
 🎥 This repo is the companion code for the video tutorial on building an AI agent from scratch.
 What makes this an agent, not a workflow
@@ -8,7 +8,7 @@ A plain RAG pipeline is a straight line: question → retrieve → answer. This 
 3.	Rewrite & loop — if not, it rewrites the query and searches again (max 2 tries).
 4.	Admit & fall back — if it still can't answer, it says so honestly, then searches the web.
 It has two real tools (the archive and the web), a loop, and it judges its own output. That's what makes it an agent.
-Features
+# Features
 •	🎯 Answers grounded in your documents, with source citations
 •	🔁 Self-correcting retrieval loop with a hard iteration cap
 •	🧠 Conversation memory (follow-up questions work)
@@ -18,7 +18,7 @@ Features
 •	🇮🇷 Multilingual embeddings — works well with Persian text
 •	💰 Fully free: free models, local embeddings, local database
 Stack
-Layer	Tool
+# Layer	Tool
 Orchestration	LangGraph
 LLM	NVIDIA Build (free tier)
 Embeddings	BAAI/bge-m3 (local, CPU)
