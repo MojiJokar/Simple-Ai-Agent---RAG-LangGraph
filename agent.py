@@ -42,7 +42,7 @@ import guard
 
 
 MAX_TRY = 2       # Maximum number of retrieval attempts
-TOP_K = 8         # How many chunks to retrieve
+TOP_K = 8         # the closest  chunks to retrieve
 KEEP = 5          # How many chunks to keep
 GAP = 0.12        # A chunk farther than this from the best score is considered noise
 LINK_GAP = 0.06   # Be stricter when displaying links — a wrong link destroys trust
@@ -54,7 +54,7 @@ MAX_LINKS = 2     # Only real sources, not a long list
 # manba : source
 # tarikhche : previous conversation
 # masir_tey_shode : path taken
-
+# our whiteboard
 class State(TypedDict):
 
     soal: str                   # The question typed by the user
@@ -100,7 +100,7 @@ def store():
 
     return _store
 
-
+# one word 
 def _yek_kalame(out):
 
     if not out or not out.strip():
@@ -110,7 +110,7 @@ def _yek_kalame(out):
 
 
 # ---------------------------------------------------------------- Node 0
-
+# make independent question from the conversation history
 def mostaghel_sazi(s: State) -> State:
 
     """
@@ -197,7 +197,7 @@ Standalone question:"""
 
 
 # ---------------------------------------------------------------- Node 1
-
+# retrieval from the archive
 def bazyabi(s: State) -> State:
 
     """
@@ -351,7 +351,7 @@ Question: {s['soal_mostaghel'] or s["soal"]}"""
 
     return s
 
-
+#
 def rah_davari(s: State) -> str:
 
     """
@@ -675,7 +675,7 @@ def jostojoo_web(s: State) -> State:
     log = s["masir_tey_shode"]
 
     log.append(
-        "Admission: this is not in Heji's videos"
+        "Admission: this is not in Moji's videos"
     )
 
     # Social networks are not useful for technical questions; they are just noise
