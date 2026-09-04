@@ -42,9 +42,9 @@ FAST_CHAIN = _chain("FAST_MODEL", "FAST_FALLBACKS")
 
 CHROMA_DIR = "./chroma_db"
 COLLECTION = "hozhi_scripts"
+# The fast model should fail quickly so we can move to the fallback model sooner.
 
-# مدل سریع باید سریع شکست بخورد تا زود برویم سراغ جایگزین.
-# مدل بزرگ فرصت بیشتری می‌گیرد چون جواب طولانی می‌سازد.
+# The larger model gets more time because it generates longer responses.
 FAST_TIMEOUT = 30
 GEN_TIMEOUT = 90
 
@@ -64,7 +64,7 @@ def _llm(model_id, temperature, timeout):
         )
     return _cache[key]
 
-
+# those 3 models is  given as  a   clean list so, we understand better
 def call(prompt, fast=False, temperature=0.0, log=None):
     """
     یک فراخوانی مقاوم.
