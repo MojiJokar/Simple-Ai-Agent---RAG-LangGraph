@@ -27,7 +27,7 @@ BASE_URL = os.getenv("NVIDIA_BASE_URL", "https://integrate.api.nvidia.com/v1")
 EMBED_MODEL = os.getenv("EMBED_MODEL", "BAAI/bge-m3")
 
 if not API_KEY:
-    raise SystemExit("NVIDIA_API_KEY در فایل .env پیدا نشد.")
+    raise SystemExit("NVIDIA_API_KEY  in file .env  was not found .")
 
 
 def _chain(primary_key, fallback_key):
@@ -60,17 +60,20 @@ def _llm(model_id, temperature, timeout):
             api_key=API_KEY,
             temperature=temperature,
             timeout=timeout,
-            max_retries=0,   # خودمان مدیریت می‌کنیم
+            max_retries=0,   # we manage ourselves
         )
     return _cache[key]
 
 # those 3 models is  given as  a   clean list so, we understand better
 def call(prompt, fast=False, temperature=0.0, log=None):
     """
-    یک فراخوانی مقاوم.
-    اول مدل اصلی، با سه بار عقب‌نشینی نمایی روی ۴۲۹.
-    اگر نشد، مدل بعدی زنجیره.
-    اگر هیچ‌کدام نشد، None — نه کرش.
+    A robust model call.
+
+    First, try the primary model, with three exponential backoff retries for 429 errors.
+
+    If that doesn't work, move to the next model in the chain.
+
+     none of the models work, return None — don't crash.
     """
     chain = FAST_CHAIN if fast else GEN_CHAIN
     timeout = FAST_TIMEOUT if fast else GEN_TIMEOUT
@@ -82,9 +85,9 @@ def call(prompt, fast=False, temperature=0.0, log=None):
                 out = _llm(model_id, temperature, timeout).invoke(prompt).content
                 out = (out or "").strip()
                 if not out:
-                    raise ValueError("جواب خالی")
+                    raise ValueError("Empty Answer")
                 if log is not None:
-                    log.append(f"مدل: {model_id}")
+                    log.append(f"ل Model: {model_id}")
                 return out
             except Exception as e:
                 msg = str(e)
@@ -93,16 +96,16 @@ def call(prompt, fast=False, temperature=0.0, log=None):
                     wait *= 2
                     continue
                 if log is not None:
-                    log.append(f"{model_id} نشد ({type(e).__name__}) — بعدی")
+                    log.append(f"{model_id} was not  ({type(e).__name__}) — the next one")
                 break
 
     if log is not None:
-        log.append("هیچ مدلی جواب نداد — مسیر امن")
+        log.append("if any model answered, it would have returned already. None returned.")
     return None
 
 
 def embedder():
-    """امبدینگ لوکال. رایگان، بدون ریت‌لیمیت، بدون تاریخ انقضا."""
+    """Local embeddings. Free, with no rate limit and no expiration date."""
     from langchain_huggingface import HuggingFaceEmbeddings
     return HuggingFaceEmbeddings(
         model_name=EMBED_MODEL,
