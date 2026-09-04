@@ -1,4 +1,4 @@
-"""  
+""" 
 Integration and robust model call layer — Heji agent
 
 There are two important decisions here:
@@ -14,9 +14,6 @@ it returns None so that the agent can make a safe decision.
 
 
 """
-
-
-
 import os
 import time
 import random
