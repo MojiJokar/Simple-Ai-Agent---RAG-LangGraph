@@ -64,6 +64,7 @@ def _llm(model_id, temperature, timeout):
         )
     return _cache[key]
 
+# here agents talk with our model !
 # those 3 models is  given as  a   clean list so, we understand better
 def call(prompt, fast=False, temperature=0.0, log=None):
     """
@@ -104,7 +105,7 @@ def call(prompt, fast=False, temperature=0.0, log=None):
     return None
 
 
-def embedder():
+def embedder(): #convert notion to number 
     """Local embeddings. Free, with no rate limit and no expiration date."""
     from langchain_huggingface import HuggingFaceEmbeddings
     return HuggingFaceEmbeddings(
