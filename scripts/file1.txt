@@ -1,0 +1,5 @@
+Drop your Word files (`.docx`) here.
+
+Each file is a source — it can be a video script, study notes, work documentation, or any other text you want the agent to use to answer questions.
+
+After adding the files, run `python ingest.py` to build the index.
