@@ -25,7 +25,7 @@ Embeddings	BAAI/bge-m3 (local, CPU)
 Vector DB	Chroma (local)
 Web search	ddgs (DuckDuckGo)
 UI	Gradio
-Project structure
+# Project structure
 config.py       Model connection, failover chain, embeddings
 ingest.py       Reads Word files → chunks → embeds → Chroma
 agent.py        The LangGraph agent (6 nodes)
@@ -51,10 +51,11 @@ Copy .env.example to .env and add your free NVIDIA API key from build.nvidia.com
 NVIDIA_API_KEY=nvapi-xxxxxxxx
 5. Add your data
 Drop your .docx files into scripts/. Optionally add metadata.xlsx with columns file, title, url so answers can link back to sources.
+-----------------------------------------------------------
 Run
 # 1. Build the index (once, takes a few minutes)
 python ingest.py
-
+---------------------------------------------------------
 # 2. Launch the chat UI
 python app.py
 Swapping models
@@ -64,6 +65,6 @@ Notes
 •	The NVIDIA free tier is rate-limited (~40 req/min). The agent handles this with exponential backoff and a model-failover chain.
 •	The free key is for personal/development use. Commercial use needs a license.
 •	Embeddings run locally on CPU — no rate limits, no expiry, works offline after the first download (~2.3 GB).
-License
+# License
 MIT
 
